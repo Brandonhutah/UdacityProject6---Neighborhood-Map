@@ -14,7 +14,6 @@ html {
 body {
 	height: 100%;
 	width: 100%;
-	color: #ffffff;
 	font-family: "Lato", sans-serif;
 }
 
@@ -100,6 +99,7 @@ body {
 }
 
 .sidebar {
+	color: #ffffff;
 	background: #000000;
 }
 

@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="css/main.css" />
 	<script src="js/knockout-3.4.1.js"></script>
+	<script src="js/jquery-3.1.1.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -13,7 +14,7 @@
 			<h3 class="page-header">Markers</h3>
 			<input class="filterbox" placeholder="Filter...">
 			<ul class="marker-list" data-bind="foreach: MarkerData">
-				<div data-bind="$root.animatemarker" class="listItem">
+				<div data-bind="click: $root.selectMarker" class="listItem">
 					<li data-bind="text: name"></li>
 				</div>
 			</ul>
@@ -25,9 +26,9 @@
 	
 
 
+	<script src="js/map_driver.js"></script>
 	<script async defer
     	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIMwkljOSfk6-BnLKkxPe58O3ro5KqkFI&callback=initMap">
     </script>
-    <script src="js/map_driver.js"></script>
 </body>
 </html>
