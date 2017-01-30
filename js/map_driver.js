@@ -147,11 +147,11 @@ var MapMarkerController = function() {
       self.filterStr(value);
       self.MarkerData(MarkerList.filter(function (el) {
         if (el.name().toLowerCase().includes(self.filterStr())) {
-          el.visible = true;
+          el.visible(true);
           return true;
         }
         else {
-          el.visible = false;
+          el.visible(false);
           return false;
         }
       }));
