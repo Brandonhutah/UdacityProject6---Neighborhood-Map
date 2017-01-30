@@ -12,7 +12,7 @@
 	<div class="container">
 		<div class="col-2 sidebar">
 			<h3 class="page-header">Markers</h3>
-			<input class="filterbox" placeholder="Filter...">
+			<input data-bind="textInput: filter" class="filterbox" placeholder="Filter...">
 			<ul class="marker-list" data-bind="foreach: MarkerData">
 				<div data-bind="click: $root.selectMarker" class="listItem">
 					<li data-bind="text: name"></li>

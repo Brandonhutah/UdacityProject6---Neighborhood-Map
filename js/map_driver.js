@@ -132,6 +132,31 @@ var MapMarkerController = function() {
   var self = this;
 
   self.MarkerData = new ko.observableArray(MarkerList);
+  self.filterStr = ko.observable("");
+  self.visible = ko.observableArray([]);
+
+  self.visible().forEach(function(el) {
+  })
+
+
+  self.filter = ko.pureComputed({
+    read: function() {
+      return self.filterStr();
+    },
+    write: function(value) {
+      self.filterStr(value);
+      self.MarkerData(MarkerList.filter(function (el) {
+        if (el.name().toLowerCase().includes(self.filterStr())) {
+          el.visible = true;
+          return true;
+        }
+        else {
+          el.visible = false;
+          return false;
+        }
+      }));
+    }
+  });
 
   self.selectMarker = function(data) {
     selectMarker(data);
