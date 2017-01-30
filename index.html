@@ -10,6 +10,11 @@
 <body>
 	<div class="container">
 		<div class="col-2 sidebar">
+			<h3 class="page-header">Markers</h3>
+			<input class="filterbox" placeholder="Filter...">
+			<ul class="marker-list" data-bind="foreach: MarkerData">
+				<li data-bind="text: listText"></li>
+			</ul>
 		</div>
 		<div class="col-10 maparea">
 			<div id="map"></div>
