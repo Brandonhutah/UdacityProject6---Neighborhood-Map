@@ -13,7 +13,9 @@
 			<h3 class="page-header">Markers</h3>
 			<input class="filterbox" placeholder="Filter...">
 			<ul class="marker-list" data-bind="foreach: MarkerData">
-				<li data-bind="text: listText"></li>
+				<div data-bind="$root.animatemarker" class="listItem">
+					<li data-bind="text: name"></li>
+				</div>
 			</ul>
 		</div>
 		<div class="col-10 maparea">
@@ -22,9 +24,10 @@
 	</div>
 	
 
-    <script src="js/map_driver.js"></script>
+
 	<script async defer
     	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIMwkljOSfk6-BnLKkxPe58O3ro5KqkFI&callback=initMap">
     </script>
+    <script src="js/map_driver.js"></script>
 </body>
 </html>
