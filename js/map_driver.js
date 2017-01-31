@@ -84,8 +84,6 @@ function selectMarker(data) {
 function makeAjaxRequest(data) {
   var content = "<ul>";
 
-  try
-  {
     $.ajax(data.infoUrl, {dataType: "jsonp", success: function( response ) {
       var articleList = response[1];
       articleList.forEach(function (value) {
@@ -95,11 +93,11 @@ function makeAjaxRequest(data) {
       content += "</ul>";
 
       showInfoWindow(data.Marker, content);
+    }, error: function() {
+      content += "<li>Error loading wiki data.</li></ul>";
+
+      showInfoWindow(data.Marker, content);
     }});
-  }
-  catch(err) {
-    content += "<li>Unable to retrieve data for map marker.</li>";
-  }
 }
 
 function showInfoWindow(marker, content) {
