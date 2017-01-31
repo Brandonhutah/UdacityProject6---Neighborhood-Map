@@ -145,7 +145,7 @@ var mapMarkerController = function() {
     write: function(value) {
       self.filterStr(value);
       self.MarkerData(MarkerList.filter(function (el) {
-        if (el.name().toLowerCase().includes(self.filterStr())) {
+        if (el.name.toLowerCase().includes(self.filterStr())) {
           el.visible(true);
           return true;
         }
