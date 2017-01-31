@@ -28,6 +28,12 @@ var initialMarkers = [
 
 var map;
 var MarkerList = [];
+var info;
+
+function ajaxError() {
+    var mapArea = document.getElementById('map');
+    mapArea.innerHTML = '<h2 class="error">Unable to load Google Maps, please try again.</h2>';
+}
 
 function initMap() {
   var loc = {lat: 40.311893, lng: -111.7036667};
@@ -35,6 +41,8 @@ function initMap() {
     zoom: 7,
     center: loc
   });
+
+  info = new google.maps.InfoWindow();
 
   initialMarkers.forEach(function(MarkerItem) {
     var marker = new google.maps.Marker({
@@ -59,7 +67,7 @@ function initMap() {
     MarkerList.push(new MarkerModel(MarkerItem));
   });
 
-  ko.applyBindings(new MapMarkerController());
+  ko.applyBindings(new mapMarkerController());
 }
 
 function selectMarker(data) {
@@ -95,15 +103,15 @@ function makeAjaxRequest(data) {
 }
 
 function showInfoWindow(marker, content) {
-  var info = new google.maps.InfoWindow({content: content});
+  info.setContent(content);
 
   info.open(map, marker);
 }
 
 var MarkerModel = function(data) {
-  this.name = ko.observable(data.name);
-  this.lat = ko.observable(data.lat);
-  this.lon = ko.observable(data.lon);
+  this.name = data.name;
+  this.lat = data.lat;
+  this.lon = data.lon;
   this.visible = ko.observable(data.visible);
   this.infoUrl = data.infoUrl;
 
@@ -121,7 +129,7 @@ var MarkerModel = function(data) {
   }, this);
 };
 
-var MapMarkerController = function() {
+var mapMarkerController = function() {
   var self = this;
 
   self.MarkerData = new ko.observableArray(MarkerList);

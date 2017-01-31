@@ -95,3 +95,7 @@ body {
 .listItem:hover {
 	background-color: #5e5e5e;
 }
+
+.error {
+	color: red;
+}

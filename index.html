@@ -3,10 +3,8 @@
 <head>
 	<title>Project 6 - Neighborhood Map</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
-	<link rel="stylesheet" type="text/css" href="css/main.css" />
-	<script src="js/knockout-3.4.1.js"></script>
-	<script src="js/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 	<div class="container">
@@ -24,10 +22,11 @@
 		</div>
 	</div>
 
-
+	<script src="js/knockout-3.4.1.js"></script>
+	<script src="js/jquery-3.1.1.min.js"></script>
 	<script src="js/map_driver.js"></script>
-	<script async defer
-    	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIMwkljOSfk6-BnLKkxPe58O3ro5KqkFI&callback=initMap">
+	<script onerror="ajaxError()" async defer
+    	src="https://maps.googleapis.com/maps/ap/js?key=AIzaSyBIMwkljOSfk6-BnLKkxPe58O3ro5KqkFI&callback=initMap">
     </script>
 </body>
 </html>
