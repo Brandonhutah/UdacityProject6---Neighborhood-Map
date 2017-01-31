@@ -1,39 +1,29 @@
 var initialMarkers = [
-  {
-    name: "Salt Lake City",
-    lat: 40.7774076,
-    lon: -111.890366,
-    visible: true,
-    infoUrl: 'http://en.wikipedia.org/w/api.php?action=opensearch&search=salt%20lake%20city&format=json&callback=wikiCallBack'
-  },
-  {
-    name: "Ancestry.com",
-    lat: 40.4352639,
-    lon: -111.873400,
-    visible: true,
-    infoUrl: 'http://en.wikipedia.org/w/api.php?action=opensearch&search=Ancestry.com&format=json&callback=wikiCallBack'
-  },
-  {
-    name: "Orem",
-    lat: 40.2952767,
-    lon: -111.7304819,
-    visible: true,
-    infoUrl: 'http://en.wikipedia.org/w/api.php?action=opensearch&search=orem&format=json&callback=wikiCallBack'
-  },
-  {
-    name: "Bridal Veil Falls",
-    lat: 40.3382884,
-    lon: -111.6034961,
-    visible: true,
-    infoUrl: 'http://en.wikipedia.org/w/api.php?action=opensearch&search=Bridal%20Veil%20Falls&format=json&callback=wikiCallBack'
-  },
-  {
-    name: "Arches National Park",
-    lat: 38.712388,
-    lon: -109.582068,
-    visible: true,
-    infoUrl: 'http://en.wikipedia.org/w/api.php?action=opensearch&search=Arches%20National%20Park&format=json&callback=wikiCallBack'
-  }
+    {name: "Salt Lake City",
+            lat: 40.7774076,
+            lon: -111.890366,
+            visible: true,
+            infoUrl: "http://en.wikipedia.org/w/api.php?action=opensearch&search=salt%20lake%20city&format=json&callback=wikiCallBack"},
+    {name: "Ancestry.com",
+            lat: 40.4352639,
+            lon: -111.873400,
+            visible: true,
+            infoUrl: "http://en.wikipedia.org/w/api.php?action=opensearch&search=Ancestry.com&format=json&callback=wikiCallBack"},
+    {name: "Orem",
+            lat: 40.2952767,
+            lon: -111.7304819,
+            visible: true,
+            infoUrl: "http://en.wikipedia.org/w/api.php?action=opensearch&search=orem&format=json&callback=wikiCallBack"},
+    {name: "Bridal Veil Falls",
+            lat: 40.3382884,
+            lon: -111.6034961,
+            visible: true,
+            infoUrl: "http://en.wikipedia.org/w/api.php?action=opensearch&search=Bridal%20Veil%20Falls&format=json&callback=wikiCallBack"},
+    {name: "Arches National Park",
+            lat: 38.712388,
+            lon: -109.582068,
+            visible: true,
+            infoUrl: "http://en.wikipedia.org/w/api.php?action=opensearch&search=Arches%20National%20Park&format=json&callback=wikiCallBack"}
 ];
 
 var map;
@@ -41,7 +31,7 @@ var MarkerList = [];
 
 function initMap() {
   var loc = {lat: 40.311893, lng: -111.7036667};
-  map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById("map"), {
     zoom: 7,
     center: loc
   });
@@ -50,15 +40,15 @@ function initMap() {
     var marker = new google.maps.Marker({
       position: {lat: parseFloat(MarkerItem.lat), lng: parseFloat(MarkerItem.lon)},
       map: map,
-      animation: google.maps.Animation.DROP,
+      animation: google.maps.Animation.DROP
     });
 
-    marker.addListener('click', function() {
-      if (marker.getAnimation() == null) {
+    marker.addListener("click", function() {
+      if (marker.getAnimation() === null) {
         marker.setAnimation(google.maps.Animation.BOUNCE);
         setTimeout(function() {marker.setAnimation(null);}, 1400);
         makeAjaxRequest(MarkerItem);
-      } 
+      }
       else {
         marker.setAnimation(null);
       }
@@ -73,12 +63,11 @@ function initMap() {
 }
 
 function selectMarker(data) {
-  if (data.Marker.getAnimation() == null) {
+  if (data.Marker.getAnimation() === null) {
     data.Marker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function() {data.Marker.setAnimation(null);}, 1400);
-    map.center = {lat: data.lat, lng: data.lon}
     makeAjaxRequest(data);
-  } 
+  }
   else {
     data.Marker.setAnimation(null);
   }
@@ -87,18 +76,22 @@ function selectMarker(data) {
 function makeAjaxRequest(data) {
   var content = "<ul>";
 
-  $.ajax(data.infoUrl, {dataType: 'jsonp', success: function( response ) {
-    var articleList = response[1];
-    for (var i = 0; i < articleList.length; i++) {
-      var articleStr = articleList[i];
-      var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-      content += '<li><a href="' + url + '">' + articleStr + '</a></li>';
-    }
+  try
+  {
+    $.ajax(data.infoUrl, {dataType: "jsonp", success: function( response ) {
+      var articleList = response[1];
+      articleList.forEach(function (value) {
+        var url = "http://en.wikipedia.org/wiki/" + value;
+        content += '<li><a href="' + url + '">' + value + '</a></li>';
+      });
+      content += "</ul>";
 
-    content += "</ul>";
-
-    showInfoWindow(data.Marker, content);
-  }});
+      showInfoWindow(data.Marker, content);
+    }});
+  }
+  catch(err) {
+    content += "<li>Unable to retrieve data for map marker.</li>";
+  }
 }
 
 function showInfoWindow(marker, content) {
@@ -117,7 +110,7 @@ var MarkerModel = function(data) {
   this.Marker = data.Marker;
 
   this.visibleOnMap = ko.computed(function() {
-    if(this.visible() == true)
+    if(this.visible() === true)
     {
       this.Marker.setMap(map);
     }
@@ -126,7 +119,7 @@ var MarkerModel = function(data) {
       this.Marker.setMap(null);
     }
   }, this);
-}
+};
 
 var MapMarkerController = function() {
   var self = this;
@@ -136,7 +129,7 @@ var MapMarkerController = function() {
   self.visible = ko.observableArray([]);
 
   self.visible().forEach(function(el) {
-  })
+  });
 
 
   self.filter = ko.pureComputed({
@@ -161,4 +154,4 @@ var MapMarkerController = function() {
   self.selectMarker = function(data) {
     selectMarker(data);
   };
-}
+};
